@@ -1,49 +1,33 @@
+{% extends "layout.html" %}
 
-<html>
-    <head>
-        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-    </head>
-    <body>
-        <div class="pane">
-            <div class="header">
-                <h1>{{restaurant.name}}</h1>
-            </div>
-        
-            <a href="{{url_for('newMenuItem', restaurant_id= restaurant.id)}}">Create new menu item</a>
+{% block content %}
 
-            <div class="flash">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                        <li><strong>{{ message }}</strong></li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                {% endwith %}
+<h2>{{ title }}</h2>
 
-            </div>
-            
-
-
-            
-            {% for item in items %}
-            <div class="nameAndPrice">
-                <span class="name"><h2>{{item.name}}</h2></span>
-                <span class="price">
-                    <p>{{item.price}}</p>
-                </span>
-            </div>
-            <div class="description">
-                <p>{{item.description}}</p>
-            </div>
-
-            <div class="editdeletepane">
-                <a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}'>Edit</a>
-                <br>
-                <a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}'>Delete</a>
-            </div>        
-            {% endfor %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+        <h1>{{restaurant.name}} Menu</h1>
         </div>
-    </body>
-</html>
+        <a class="btn btn-lg btn-primary" href="{{ url_for('newMenuItem', restaurant_id = restaurant.id)}}">Add a new item</a>
+    </div>    
+</div>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4">
+        <h3>{{ item.name }}</h3>
+        <span class="price">
+            <p>{{item.price}}</p>
+        </span>
+        <span>
+            <p>{{item.description}}</p>
+        </span>
+        <a class="btn btn-info" href='{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}'>Edit</a>
+        
+        <a class="btn btn-warning" href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}'>Delete</a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
