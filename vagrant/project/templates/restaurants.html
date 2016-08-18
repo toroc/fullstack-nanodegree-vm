@@ -10,10 +10,26 @@
         <div class="page-header">
         <h1>Restaurants <a class="btn btn-lg btn-primary" href="{{ url_for('newRestaurant')}}">Add a new restaurant</a></h1>
         </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-info">
+            <ul>
+                {% for message in messages %}
+                <li class="divider"><strong>{{message}}</li>
+                {% endfor %}
+            </ul>
+            
+        </div>
+        {% endif %}
+        {% endwith %}
         
     </div>    
 </div>
 
+
+{% if not items%}
+<h2>There are no items</h2>
+{% endif %}
 <div class="row">
     {% for restaurant in restaurants %}
     <div class="col-md-4">
